@@ -40,7 +40,7 @@ var refreshExamples = function() {
   API.getExamples().then(function(data) {
     var $examples = data.map(function(example) {
       var $a = $("<a>")
-        .text(example.text)
+        .text(example.goal)
         .attr("href", "/example/" + example.id);
 
       var $li = $("<li>")
@@ -70,8 +70,8 @@ var handleFormSubmit = function(event) {
   event.preventDefault();
 
   var example = {
-    text: $goal.val().trim(),
-    description: $endDate.val().trim(),
+    goal: $goal.val().trim(),
+    completetionDate: $endDate.val().trim(),
     ms1: $ms1.val().trim(),
     ms2: $ms2.val().trim(),
     ms3: $ms3.val().trim(),
@@ -79,8 +79,8 @@ var handleFormSubmit = function(event) {
     ms5: $ms5.val().trim()
   };
 
-  if (!(example.text && example.description)) {
-    alert("You must enter a Goal and five milestones!");
+  if (!(example.goal && example.completetionDate)) {
+    alert("You must enter a Goal and!");
     return;
   }
 
