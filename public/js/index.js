@@ -7,7 +7,7 @@ var $ms3 = $("#ms3");
 var $ms4 = $("#ms4");
 var $ms5 = $("#ms5");
 var $submitBtn = $("#submit");
-var $exampleList = $("#example-list");
+var $goalList = $("#goal-list");
 
 // The API object contains methods for each kind of request we'll make
 var API = {
@@ -17,19 +17,19 @@ var API = {
         "Content-Type": "application/json"
       },
       type: "POST",
-      url: "api/examples",
+      url: "api/goals",
       data: JSON.stringify(example)
     });
   },
   getExamples: function() {
     return $.ajax({
-      url: "api/examples",
+      url: "api/goals",
       type: "GET"
     });
   },
   deleteExample: function(id) {
     return $.ajax({
-      url: "api/examples/" + id,
+      url: "api/goals/" + id,
       type: "DELETE"
     });
   }
@@ -59,8 +59,8 @@ var refreshExamples = function() {
       return $li;
     });
 
-    $exampleList.empty();
-    $exampleList.append($examples);
+    $goalList.empty();
+    $goalList.append($examples);
   });
 };
 
@@ -80,7 +80,7 @@ var handleFormSubmit = function(event) {
   };
 
   if (!(example.text && example.description)) {
-    alert("You must enter an example text and description!");
+    alert("You must enter a Goal and five milestones!");
     return;
   }
 
@@ -111,4 +111,4 @@ var handleDeleteBtnClick = function() {
 
 // Add event listeners to the submit and delete buttons
 $submitBtn.on("click", handleFormSubmit);
-$exampleList.on("click", ".delete", handleDeleteBtnClick);
+$goalList.on("click", ".delete", handleDeleteBtnClick);
