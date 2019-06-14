@@ -69,7 +69,7 @@ var refreshExamples = function() {
 var handleFormSubmit = function(event) {
   event.preventDefault();
 
-  var example = {
+  var goalInfo = {
     goal: $goal.val().trim(),
     completetionDate: $endDate.val().trim(),
     ms1: $ms1.val().trim(),
@@ -79,7 +79,7 @@ var handleFormSubmit = function(event) {
     ms5: $ms5.val().trim()
   };
 
-  if (!(example.goal && example.completetionDate)) {
+  if (!(goalInfo.goal && goalInfo.completetionDate)) {
     alert("You must enter a Goal and!");
     return;
   }
@@ -112,3 +112,67 @@ var handleDeleteBtnClick = function() {
 // Add event listeners to the submit and delete buttons
 $submitBtn.on("click", handleFormSubmit);
 $goalList.on("click", ".delete", handleDeleteBtnClick);
+
+
+
+
+
+
+
+
+
+$(document).ready(() => {
+  // Materialize init
+  $('.sidenav').sidenav();
+  $('.tabs').tabs();
+  $('.fixed-action-btn').floatingActionButton();
+  $('.tooltipped').tooltip();
+  $('.modal').modal();
+  $('.datepicker').datepicker();
+
+  //==============================================================||
+  // Creating a New To Do
+  //==============================================================||
+
+  // Event Listener for Adding Subtasks within "To Do Creation Modal"
+  $('#add-subtask').click(() => {
+      let input = $("#create-subtask-input").val().trim();
+      $('#new-subtasks').append(
+          `<li class="collection-item">
+              <div>${input}
+                  <a href="#!" class="secondary-content">
+                      <i class="material-icons red-text delete-subtask">delete</i>
+                  </a>
+              </div>
+          </li>`
+      )
+
+      $('#create-subtask-input').val('');
+  });
+
+  //  Event Listener for Deleting Subtasks within "To Do Creation Modal"
+  $('#todo-creation-modal').on('click', '.delete-subtask', () => {
+      $(this).remove();
+  });
+
+  // Event Listener to render the To Do Item to the App
+  $('#todo-creation-modal').on('click', '#create-new-todo-btn', () => {
+      let newTask = $('#task-title').val().trim();
+      console.log(newTask)
+      $('#to-do-list').append(
+          `<li class="collection-item">
+              <div>${newTask}
+                  <a href="#!" class="secondary-content">
+                      <i class="material-icons red-text">send</i>
+                  </a>
+              </div>
+          </li>`
+      )
+  });
+
+  //==============================================================||
+  //==============================================================||
+
+
+
+})
