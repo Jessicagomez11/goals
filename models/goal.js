@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  var Example = sequelize.define("Example", {
+  var Goal = sequelize.define("Goal", {
     goal: DataTypes.STRING,
     completetionDate: DataTypes.TEXT,
     ms1: DataTypes.STRING,
@@ -8,5 +8,5 @@ module.exports = function(sequelize, DataTypes) {
     ms4: DataTypes.STRING,
     ms5: DataTypes.STRING
   });
-  return Example;
+  return Goal;
 };

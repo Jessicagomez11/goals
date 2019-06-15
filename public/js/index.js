@@ -11,23 +11,23 @@ var $goalList = $("#goal-list");
 
 // The API object contains methods for each kind of request we'll make
 var API = {
-  saveExample: function(example) {
+  saveGoal: function(newGoal) {
     return $.ajax({
       headers: {
         "Content-Type": "application/json"
       },
       type: "POST",
       url: "api/goals",
-      data: JSON.stringify(example)
+      data: JSON.stringify(newGoal)
     });
   },
-  getExamples: function() {
+  getGoals: function() {
     return $.ajax({
       url: "api/goals",
       type: "GET"
     });
   },
-  deleteExample: function(id) {
+  deleteGoal: function(id) {
     return $.ajax({
       url: "api/goals/" + id,
       type: "DELETE"
@@ -35,18 +35,18 @@ var API = {
   }
 };
 
-// refreshExamples gets new examples from the db and repopulates the list
-var refreshExamples = function() {
-  API.getExamples().then(function(data) {
-    var $examples = data.map(function(example) {
+// refreshGoals gets new Goals from the db and repopulates the list
+var refreshGoals = function() {
+  API.getGoals().then(function(data) {
+    var $goals = data.map(function(goal) {
       var $a = $("<a>")
-        .text(example.goal)
-        .attr("href", "/example/" + example.id);
+        .text(goal.goal)
+        .attr("href", "/Goal/" + goal.id);
 
       var $li = $("<li>")
         .attr({
           class: "list-group-item",
-          "data-id": example.id
+          "data-id": goal.id
         })
         .append($a);
 
@@ -60,16 +60,16 @@ var refreshExamples = function() {
     });
 
     $goalList.empty();
-    $goalList.append($examples);
+    $goalList.append($goals);
   });
 };
 
-// handleFormSubmit is called whenever we submit a new example
-// Save the new example to the db and refresh the list
+// handleFormSubmit is called whenever we submit a new Goal
+// Save the new Goal to the db and refresh the list
 var handleFormSubmit = function(event) {
   event.preventDefault();
 
-  var example = {
+  var goalInfo = {
     goal: $goal.val().trim(),
     completetionDate: $endDate.val().trim(),
     ms1: $ms1.val().trim(),
@@ -79,13 +79,13 @@ var handleFormSubmit = function(event) {
     ms5: $ms5.val().trim()
   };
 
-  if (!(example.goal && example.completetionDate)) {
+  if (!(goalInfo.goal && goalInfo.completetionDate)) {
     alert("You must enter a Goal and!");
     return;
   }
 
-  API.saveExample(example).then(function() {
-    refreshExamples();
+  API.saveGoal(goalInfo).then(function() {
+    refreshGoals();
   });
 
   $goal.val("");
@@ -97,15 +97,15 @@ var handleFormSubmit = function(event) {
   $ms5.val("");
 };
 
-// handleDeleteBtnClick is called when an example's delete button is clicked
-// Remove the example from the db and refresh the list
+// handleDeleteBtnClick is called when an Goal's delete button is clicked
+// Remove the Goal from the db and refresh the list
 var handleDeleteBtnClick = function() {
   var idToDelete = $(this)
     .parent()
     .attr("data-id");
 
-  API.deleteExample(idToDelete).then(function() {
-    refreshExamples();
+  API.deleteGoal(idToDelete).then(function() {
+    refreshGoals();
   });
 };
 
@@ -170,8 +170,6 @@ $(document).ready(() => {
       )
   });
 
-  //==============================================================||
-  //==============================================================||
 
 
 
